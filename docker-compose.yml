@@ -1,0 +1,8 @@
+services:
+  logger:
+    build: .
+    image: formatter-logger:latest
+    environment:
+      LOG_PATH: /home/logs/log.txt
+    volumes:
+      - ./logs:/home/logs

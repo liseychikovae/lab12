@@ -1,0 +1,14 @@
+_build/
+_builds/
+_install/
+build/
+logs/
+*.o
+*.a
+*.so
+*.dylib
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+Testing/

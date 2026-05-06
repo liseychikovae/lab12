@@ -1,0 +1,12 @@
+language: cpp
+dist: focal
+
+compiler:
+  - gcc
+  - clang
+
+script:
+  - cmake -S . -B _build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
+  - cmake --build _build
+  - ctest --test-dir _build --output-on-failure
+  - cmake --install _build --prefix _install
