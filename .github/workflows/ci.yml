@@ -1,0 +1,35 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test-package:
+    name: Build, test and package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Package
+        run: cpack -G TGZ --config build/CPackConfig.cmake
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: formatter-workspace-package
+          path: build/*.tar.gz
+          if-no-files-found: error
